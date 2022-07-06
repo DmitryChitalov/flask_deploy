@@ -52,16 +52,14 @@ class UpdateAccountForm(FlaskForm):
                         validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Обновить')
 
-    @staticmethod
-    def validate_username(username):
+    def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError('Это имя занято. '
                                       'Пожалуйста, выберите другой')
 
-    @staticmethod
-    def validate_email(email):
+    def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
